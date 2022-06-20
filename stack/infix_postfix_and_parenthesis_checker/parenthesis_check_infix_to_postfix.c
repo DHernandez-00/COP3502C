@@ -35,10 +35,48 @@ int checkBalance(char exp[]){
 
     int valid = 1; //are expressions is valid till proven its not
     struct stack *expStack = (struct stack *)malloc(sizeof(struct stack));
+    initialize(expStack);
 
+    char item_holder;
     //read string char by char left to right
     for(int i = 0; exp[i] != '\0'; i++){
 
+        if(exp[i] == '(' || exp[i] == '[' || exp[i] == '{'){
+            push(expStack, exp[i]);
+        }
+        if(exp[i] == ')' || exp[i] == ']' || exp[i] == '}'){
+            item_holder = pop(expStack);
+
+            if(exp[i] == ')'){
+                if(item_holder != '('){
+                    valid = 0;
+                    return valid;
+                }
+            }
+
+            if(exp[i] == ']'){
+                if(item_holder != '['){
+                    valid = 0;
+                    return valid;
+                }
+            }
+
+            if(exp[i] == '}'){
+                if(item_holder != '{'){
+                    valid = 0;
+                    return valid;
+                }
+            }
+        }
+
+    }//end of for
+
+    if(empty(expStack)){
+        return valid;
+    }
+    else{
+        valid = 0;
+        return valid;
     }
 }
 
@@ -48,7 +86,13 @@ int main() {
     printf("Enter expressions: ");
     scanf(" %s", exp);
 
-    checkBalance(exp);
+    int exp_check;
+    if(checkBalance(exp)){
+        printf("Expression is balanced");
+    }
+    else{
+        printf("Expression not balanced");
+    }
 
     
     return 0;
@@ -61,7 +105,7 @@ void initialize(struct stack* stackPtr) {
 // If the push occurs, 1 is returned. If the
 // stack is full and the push can't be done, 0 is
 // returned.
-int push(struct stack* stackPtr, int value) {
+int push(struct stack* stackPtr, char value) {
 
     // Check if the stack is full.
     if (full(stackPtr))
@@ -86,7 +130,7 @@ int empty(struct stack* stackPtr) {
 // Pre-condition: The stack pointed to by stackPtr is NOT empty.
 // Post-condition: The value on the top of the stack is popped and returned.
 // Note: If the stack pointed to by stackPtr is empty, -1 is returned.
-int pop(struct stack* stackPtr) {
+char pop(struct stack* stackPtr) {
 
     int retval;
 
@@ -104,7 +148,7 @@ int pop(struct stack* stackPtr) {
 // Pre-condition: The stack pointed to by stackPtr is NOT empty.
 // Post-condition: The value on the top of the stack is returned.
 // Note: If the stack pointed to by stackPtr is empty, -1 is returned.
-int top(struct stack* stackPtr) {
+char top(struct stack* stackPtr) {
 
     // Take care of the empty case.
     if (empty(stackPtr))
