@@ -1,21 +1,23 @@
 // Arup Guha
 // 6/20/07
 // Written in COP 3502 to illustrate an array implementation of a stack.
- //modified by Tanvir Ahmed 6/1/2020
+ //modified by Darien Hernanedz 06/20/2022
 
 #include <stdio.h>
+#include <stdlib.h>
+
 
 // The array will store the items in the stack, first in
 // index 0, then 1, etc. top will represent the index
 // to the top element in the stack. If the stack is
 // empty top will be -1.
 
-#define SIZE 10
+#define SIZE 20
 #define EMPTY -1
 
 struct stack {
 
-    int items[SIZE];
+    char items[SIZE];
 
     int top;
 
@@ -23,73 +25,32 @@ struct stack {
 
 void initialize(struct stack* stackPtr);
 int full(struct stack* stackPtr);
-int push(struct stack* stackPtr, int value);
+int push(struct stack* stackPtr, char value);
 int empty(struct stack* stackPtr);
-int pop(struct stack* stackPtr);
-int top(struct stack* stackPtr);
+char pop(struct stack* stackPtr);
+char top(struct stack* stackPtr);
 void display(struct stack* stackPtr);
 
-int main() {
-    int i;
-    struct stack stack1;
-    struct stack stack2;
+int checkBalance(char exp[]){
 
-    // Set up the stack and push a couple items, then pop one.
-    initialize(&stack1);
-    initialize(&stack2);
-   
-    int ele;
-    int ch;
-    while(1)
-    {
-        printf("\nMenu:\n 1: Stack 1 push\n 2: Stack 2 Push\n 3: Stack 1 Pop\n 4: Stack 2 Pop\n 5: Stack 1 display\n 6: Stack 2 Display\n 7: Exit\nEnter your choice: ");
-        scanf("%d",&ch);
-        if(ch==7)
-        {
-            printf("<<EXIT>>");
-            break;
-        }
-        else if (ch==1)
-        {
-            printf("Enter an element to PUSH in the stack1: ");
-            scanf("%d",&ele);
-            push(&stack1, ele);
-            display(&stack1);
-        }
-        else if (ch==2)
-        {
-            printf("Enter an element to PUSH in the stack2: ");
-            scanf("%d",&ele);
-            push(&stack2, ele);
-            display(&stack2);
-        }
-        else if (ch==3)
-        {
-            ele = pop(&stack1);
-            if(ele!=0 )
-            {
-                printf(" ITEM POPPED from Stack 1: %d ",ele);
-                display(&stack1);
-            }
-        }
-        else if (ch==4)
-        {
-            ele = pop(&stack2);
-            if(ele!=0 )
-            {
-                printf(" ITEM POPPED from Stack 2: %d ",ele);
-                display(&stack2);
-            }
-        }
-        else if(ch==5)
-        {
-            display(&stack1);
-        }
-        else if(ch==6)
-        {
-            display(&stack2);
-        }
+    int valid = 1; //are expressions is valid till proven its not
+    struct stack *expStack = (struct stack *)malloc(sizeof(struct stack));
+
+    //read string char by char left to right
+    for(int i = 0; exp[i] != '\0'; i++){
+
     }
+}
+
+int main() {
+   
+    char exp[SIZE];
+    printf("Enter expressions: ");
+    scanf(" %s", exp);
+
+    checkBalance(exp);
+
+    
     return 0;
 }
 
